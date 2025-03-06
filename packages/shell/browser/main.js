@@ -153,7 +153,7 @@ class Browser {
 
     this.extensions = new ElectronChromeExtensions({
       license: 'internal-license-do-not-use',
-      session: this.session,
+      session: session.fromPartition(`persist:shell`),
 
       createTab: async (details) => {
         await this.ready
@@ -214,7 +214,7 @@ class Browser {
     // Wait for web store extensions to finish loading as they may change the
     // newtab URL.
     await installChromeWebStore({
-      session: this.session,
+      session: session.fromPartition(`persist:shell`),
       async beforeInstall(details) {
         if (!details.browserWindow || details.browserWindow.isDestroyed()) return
 

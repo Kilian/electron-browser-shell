@@ -106,7 +106,10 @@ class Tabs extends EventEmitter {
   }
 
   create(webContentsViewOptions) {
-    const tab = new Tab(this.window, webContentsViewOptions)
+    const tab = new Tab(this.window, {
+      ...webContentsViewOptions,
+      webPreferences: { ...webContentsViewOptions?.webPreferences, partition: 'persist:shell' },
+    })
     this.tabList.push(tab)
     if (!this.selected) this.selected = tab
     tab.show() // must be attached to window
