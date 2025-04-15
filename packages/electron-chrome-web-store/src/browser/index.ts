@@ -6,7 +6,7 @@ import { createRequire } from 'node:module'
 import { registerWebStoreApi } from './api'
 import { loadAllExtensions } from './loader'
 export { loadAllExtensions } from './loader'
-export { installExtension, downloadExtension } from './installer'
+export { installExtension, uninstallExtension, downloadExtension } from './installer'
 import { initUpdater } from './updater'
 export { updateExtensions } from './updater'
 import { getDefaultExtensionsPath } from './utils'
@@ -91,6 +91,11 @@ interface ElectronChromeWebStoreOptions {
    */
   minimumManifestVersion?: number
 
+  /**
+   * Called prior to installing an extension. If implemented, return a Promise
+   * which resolves with `{ action: 'allow' | 'deny' }` depending on the action
+   * to be taken.
+   */
   beforeInstall?: BeforeInstall
 }
 
